@@ -1,0 +1,83 @@
+{%extends "base.html"%}
+
+{%block content%}
+
+<div class="post">
+
+	  <h1><a href="{% url post_detail post.slug %}">{{ post.title }}</a></h1>
+	  <!-- <p>{{post.text|truncatewords:20}}</p> -->
+	  <div class="row">
+	  	<div class="span11">
+	  		{{post.text}}
+	  	</div>
+	  	<!-- <div class="span2  block-message alert-message boring"> Others say</div> -->
+	  	<div class="alert-message block-message success span1 stub"> <b>{{post.hands_up}}</b> Hands Up</div>
+	  	<div class="alert-message block-message info span1 stub"> <b>{{post.hands_middle}}</b> Hands Middle</div>
+	  	<div class="alert-message block-message error span1 stub"> <b>{{post.hands_down}}</b> Hands Down</div>	  
+	  </div> <!-- /row -->
+	  
+	  <div class="row">
+	  	  <p class="span8">
+	  		<b>{{post.author}} | {{post.occupation}} | {{post.age}} Years Old </b>
+	 	 </p>
+	  		<a  href="{% url post_detail post.slug %}#commentform" class="btn span4  gocomment offset3">What do you think?</a>
+	  </div>
+	  	
+
+	  <p><i>
+	    {{ post.created_on }} |
+	    {{ post.comments|length }} people have weighed in </i>
+	    <!--  | tagged {{ post.tags|join:', ' }} -->
+	  </p>
+</div> <!-- /post -->
+
+
+<div class="row">
+	<div id="comments" class="span10 offset3">
+		<h2 class="center">Comments</h2>
+		<hr>
+		{% for comment in post.comments %}
+			<div class="comment block-message alert-message {{comment.cssClass}}">
+				<h3>{{ comment.author }} <small>on {{ comment.created_on }}</small></h3>
+				  {{ comment.text }}
+			 </div>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="row">
+	<div id="commentform"  class="span10 offset3">
+		<form action="{{post.slug}}/comment" method="post" class="block-message alert-message"><fieldset>
+			<h2 class="center" style="margin-top: -30px;"> Your Thoughts</h2>
+			{% csrf_token %}
+
+			<div class="clearfix">
+		        <label for="acomment">Your comment</label>
+		        <div class="input">
+		          <textarea class="span6" id="acomment" name="text" rows="5"></textarea>
+		        </div>
+		      </div>
+				
+			<div class="clearfix">
+	            <label for="name">Your name</label>
+	            <div class="input">
+	              <input class="span6" id="name" name="author" type="text">
+	            </div>
+	          </div>
+				
+			<div class="clearfix">
+		        <label for="acomment">Post with a:</label>
+		        <div class="input">
+		        	<button type="submit" value="1" class="btn success" name="hands"> Hands Up!</button>
+		        	<button type="submit" value="0" class="btn info" name="hands"> Hands Middle</button>
+		        	<button type="submit" value="-1" class="btn danger" name="hands"> Hands Down!</button>
+		        </div>
+		      </div>
+
+		</fieldset></form>
+	</div> <!-- /#commentform -->
+</div> <!-- /row -->
+
+
+
+{%endblock%}

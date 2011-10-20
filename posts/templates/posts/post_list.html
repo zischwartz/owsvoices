@@ -1,0 +1,43 @@
+{%extends "base.html"%}
+
+{%block content%}
+
+
+{% for post in post_list %}
+<div class="post {%if forloop.first%} hugepost {% endif %}">
+
+	  <h2><a href="{% url post_detail post.slug %}">{{ post.title }}</a></h2>
+	  <!-- <p>{{post.text|truncatewords:20}}</p> -->
+	  <div class="row">
+	  	<div class="span11 posttext">
+	  		{{post.text}}
+	  	</div>
+	  	<!-- <div class="span2  block-message alert-message boring"> Others say</div> -->
+	  	<div class="alert-message block-message success span1 stub"> <b>{{post.hands_up}}</b> Hands Up</div>
+	  	<div class="alert-message block-message info span1 stub"> <b>{{post.hands_middle}}</b> Hands Middle</div>
+	  	<div class="alert-message block-message error span1 stub"> <b>{{post.hands_down}}</b> Hands Down</div>	  
+	  </div> <!-- /row -->
+	  
+	  <div class="row">
+	  	  <p class="span8">
+	  		<b>{{post.author}} | {{post.occupation}} | {{post.age}} Years Old </b>
+	 	 </p>
+	  		<a  href="{% url post_detail post.slug %}#comments" class="btn span4  gocomment offset3">What do you think?</a>
+	  </div>
+
+
+	  <!-- <div class="span2  block-message alert-message boring">Says <i>{{post.author}}</i></div> -->
+	  	
+
+	  <p><i>
+	    {{ post.created_on }} |
+	    {{ post.comments|length }} people have weighed in </i>
+	    <!--  | tagged {{ post.tags|join:', ' }} -->
+	  </p>
+</div>
+{% endfor %}
+
+
+
+
+{%endblock%}
