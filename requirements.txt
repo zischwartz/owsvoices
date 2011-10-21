@@ -4,3 +4,4 @@ hg+https://bitbucket.org/wkornewald/django-dbindexer
 hg+https://bitbucket.org/wkornewald/djangotoolbox
 git+https://github.com/django-mongodb-engine/mongodb-engine
 pymongo==2.0.1
+
