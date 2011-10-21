@@ -9,11 +9,12 @@ env.prj_name = 'voices'
 git_repo = 'git://github.com/zischwartz/owsvoices.git'
 
 def prepare_deploy():
-    local("./manage.py test posts")
+    local("./manage.py test posts") #chmod -x manage.py ?
     local("git add . && git commit -m 'commit by fab, prepare_deploy' ")
+    local("git push ")
 
 def prepare_server():
-	sudo('yum install git-core nginx -y')
+	sudo('yum install git-core nginx -y mercurial')
 	sudo('easy_install pip')
 	sudo('pip install virtualenv')
 # pip install supervisor

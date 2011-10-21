@@ -1,6 +1,6 @@
 hg+https://bitbucket.org/wkornewald/django-nonrel
 django-autoslug==1.4.1
 hg+https://bitbucket.org/wkornewald/django-dbindexer
-git+https://github.com/django-mongodb-engine/mongodb-engine
 hg+https://bitbucket.org/wkornewald/djangotoolbox
+git+https://github.com/django-mongodb-engine/mongodb-engine
 pymongo==2.0.1
