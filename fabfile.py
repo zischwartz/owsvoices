@@ -3,7 +3,7 @@ from fabric.api import *
 from fabric.contrib.console import confirm
 from contextlib import contextmanager as _contextmanager
 
-env.hosts = ['ec2-user@ec2-107-22-32-186.compute-1.amazonaws.com']
+env.hosts = ['ec2-107-22-54-148.compute-1.amazonaws.com']
 
 env.path = '/home/ec2-user/conversation/'
 env.prj_name = 'voices'
@@ -16,11 +16,25 @@ def prepare_deploy():
     local("git add . && git commit -m 'commit by fab, prepare_deploy' ")
     local("git push ")
 
+
 def prepare_server():
 	sudo('yum install git-core nginx -y mercurial python-devel')
+	#for mongodb
+	sudo('yum -y install git tcsh scons gcc-c++ glibc-devel')
+	sudo('yum -y install boost-devel pcre-devel js-devel readline-devel')
+	sudo('yum -y install boost-devel-static readline-static ncurses-staticl')
 	sudo('easy_install pip')
 	sudo('pip install virtualenv')
-# pip install supervisor
+
+	sudo('git clone git://github.com/mongodb/mongo.git') #and then i ran out of space
+	with cd('mongo'):
+		run('git tag -l && git checkout r2.0.0')
+		sudo('scons all')
+		sudo('scons --prefix=/opt/mongo install')
+
+# pip install supervisor, guicorn
+# http://senko.net/en/django-nginx-gunicorn/
+#http://gunicorn.org/run.html#gunicorn-django
 
 @_contextmanager
 def virtualenv():

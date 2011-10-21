@@ -4,4 +4,5 @@ hg+https://bitbucket.org/wkornewald/djangotoolbox
 git+https://github.com/django-mongodb-engine/mongodb-engine
 django-autoslug
 pymongo
-
+gunicorn
+supervisor
