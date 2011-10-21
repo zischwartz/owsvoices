@@ -3,7 +3,7 @@ from fabric.api import *
 from fabric.contrib.console import confirm
 from contextlib import contextmanager as _contextmanager
 
-env.hosts = ['ec2-107-22-54-148.compute-1.amazonaws.com']
+env.hosts = ['ec2-user@ec2-107-22-54-148.compute-1.amazonaws.com']
 
 env.path = '/home/ec2-user/conversation/'
 env.prj_name = 'voices'
@@ -26,11 +26,15 @@ def prepare_server():
 	sudo('easy_install pip')
 	sudo('pip install virtualenv')
 
-	sudo('git clone git://github.com/mongodb/mongo.git') #and then i ran out of space
-	with cd('mongo'):
-		run('git tag -l && git checkout r2.0.0')
-		sudo('scons all')
-		sudo('scons --prefix=/opt/mongo install')
+	#for 32 bit
+	sudo('yum install http://downloads-distro.mongodb.org/repo/redhat/os/i686/RPMS/mongo-10gen-2.0.0-mongodb_1.i686.rpm -y --nogpgcheck')
+	sudo('yum install http://downloads-distro.mongodb.org/repo/redhat/os/i686/RPMS/mongo-10gen-server-2.0.0-mongodb_1.i686.rpm -y --nogpgcheck')
+	#64 bit at http://downloads-distro.mongodb.org/repo/redhat/os/
+
+	sudo('mkdir -p /data/db/')
+	sudo('sudo chown `id -u` /data/db')
+
+
 
 # pip install supervisor, guicorn
 # http://senko.net/en/django-nginx-gunicorn/
