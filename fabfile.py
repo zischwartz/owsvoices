@@ -63,27 +63,36 @@ def config_nginx():
 	with cd(env.path):					
 		# sudo("echo '%s' >> /etc/nginx/nginx.conf " % nginx_config)
 
+		# Put our django specific conf in the main dir
 		run("""echo "%s" > django_nginx.conf""" % nginx_config)
 
-		sudo("ln -s  %snginx.conf /etc/nginx/conf.d/django_nginx.conf" % env.path)
-		
-		sudo("nginx -c %snginx.conf" % code_dir)
-
-
+		#link to it in nginx's conf
+		# sudo("ln -s  %sdjango_nginx.conf /etc/nginx/conf.d/django_nginx.conf" % env.path)
+	
 		# sudo chown nginx -R static/
 		#sudo chown nginx:nginx -R static/
-
-
 
 		# run("""echo "%s" > nginx.conf""" % gunicorn_nginx_config)
 		# sudo("rm /etc/nginx/nginx.conf")		
 		# sudo("ln -s  %snginx.conf /etc/nginx/nginx.conf" % env.path)		
 
 # sudo chmod -R  777 sitestatic/
+# /home/ec2-user/conversation
+
+
+def start():
+	#run nginx based on the conf in code/voices/
+	# sudo nginx -c /home/ec2-user/conversation/voices/nginx.conf
+	sudo("nginx -c %s/nginx.conf" % code_dir)
+	
+	with cd(code_dir):
+		run('mongod')
+		with virtualenv():
+			run('gunicorn_django')	
 
 
 def test():
-	local("""echo '%s' > nginx.conf""" % full_nginx_config)
+	local("""echo '%s' > z.txt""" % nginx_config)
 
 
 # chmod 0771 static/ -r ? 
@@ -108,21 +117,18 @@ server {
     root %s;
     # serve directly - analogous for static/staticfiles
     location /static/ {
-        # if asset versioning is used
-        # if ($query_string) {
-            # expires max;
-        # }
+
     }
     location /admin/media/ {
         # this changes depending on your python version
-        root %s/lib/python2.6/site-packages/django/contrib;
+        root %slib/python2.6/site-packages/django/contrib;
     }
     location / {
         proxy_pass_header Server;
-        proxy_set_header Host $http_host;
+        proxy_set_header Host \$"http_host";
         proxy_redirect off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Real-IP \$"remote_addr";
+        proxy_set_header X-Scheme \$"scheme";
         proxy_connect_timeout 10;
         proxy_read_timeout 10;
         proxy_pass http://localhost:8000/;
