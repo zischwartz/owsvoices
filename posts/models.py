@@ -7,12 +7,17 @@ from autoslug import AutoSlugField
 
 from django_mongodb_engine.contrib import MongoDBManager
 
+# in shell
+# from posts.models import *
 
 class Comment(models.Model):
 	created_on = models.DateTimeField(auto_now_add=True)
 	author = models.CharField(max_length=250)
 	text = models.TextField()
 	hands = models.IntegerField() # up is 1, middle is 0, -1 is down
+	comments = ListField(EmbeddedModelField('self'), editable=False)
+	child_number = models.IntegerField(default=0) # 0 is attached to post, 1 is to a comment, 2 is to a comment on a comment
+
 	def __unicode__(self):
 		return self.author
 	
@@ -47,7 +52,7 @@ class Post(models.Model):
 	hands_up = models.IntegerField(default=1) 
 	hands_middle = models.IntegerField(default=0) 
 	hands_down = models.IntegerField(default=0) 
-	
+
 	def apply_hands_and_save(self, c,  *args, **kwargs ):
 		if c.hands==0:
 			self.hands_middle +=1

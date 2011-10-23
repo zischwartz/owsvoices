@@ -25,6 +25,8 @@ def prepare_server():
 	sudo('yum -y install boost-devel-static readline-static ncurses-staticl')
 	sudo('easy_install pip')
 	sudo('pip install virtualenv')
+	sudo('pip install supervisor')
+
 
 	#for 32 bit
 	sudo('yum install http://downloads-distro.mongodb.org/repo/redhat/os/i686/RPMS/mongo-10gen-2.0.0-mongodb_1.i686.rpm -y --nogpgcheck')
@@ -61,26 +63,35 @@ code_dir = env.path + env.prj_name
 
 def config_nginx():
 	with cd(env.path):					
-		# sudo("echo '%s' >> /etc/nginx/nginx.conf " % nginx_config)
 
 		# Put our django specific conf in the main dir
 		run("""echo "%s" > django_nginx.conf""" % nginx_config)
 
 		#link to it in nginx's conf
-		# sudo("ln -s  %sdjango_nginx.conf /etc/nginx/conf.d/django_nginx.conf" % env.path)
+		sudo("ln -s  %sdjango_nginx.conf /etc/nginx/conf.d/django_nginx.conf" % env.path)
 	
-		# sudo chown nginx -R static/
-		#sudo chown nginx:nginx -R static/
+def config_supervisor():
+	with cd(env.path):			
+		run('echo_supervisord_conf > supervisord.conf')
+		run("echo '%s' >>  supervisord.conf " % supervisor_config)
 
-		# run("""echo "%s" > nginx.conf""" % gunicorn_nginx_config)
-		# sudo("rm /etc/nginx/nginx.conf")		
-		# sudo("ln -s  %snginx.conf /etc/nginx/nginx.conf" % env.path)		
+
+
+# notes
+# sudo chown nginx -R static/
+#sudo chown nginx:nginx -R static/
+
+# run("""echo "%s" > nginx.conf""" % gunicorn_nginx_config)
+# sudo("rm /etc/nginx/nginx.conf")		
+# sudo("ln -s  %snginx.conf /etc/nginx/nginx.conf" % env.path)		
 
 # sudo chmod -R  777 sitestatic/
 # /home/ec2-user/conversation
 
 
 def start():
+	# sudo supervisord
+
 	#run nginx based on the conf in code/voices/
 	# sudo nginx -c /home/ec2-user/conversation/voices/nginx.conf
 	sudo("nginx -c %s/nginx.conf" % code_dir)
@@ -139,14 +150,18 @@ server {
 
 
 
-# supervisor_config = """
-# [program:hello]
-# directory = %s
-# user = ec2-user
-# command = /path/to/test/hello/script.sh
-# stdout_logfile = /var/log/gunicorn/logfileout.log
-# stderr_logfile = /var/log/gunicorn/logfileerr.log
-#   """ % (code_dir, env.path)
+supervisor_config = """
+
+[program:mongodb]
+command= mongod
+user=root
+autostart=true
+autorestart=true
+
+
+
+  """ 
+  # % (code_dir)
 
 
 
