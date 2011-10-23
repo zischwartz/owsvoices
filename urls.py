@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 from posts.views import *
 
 from django.views.generic import ListView, DetailView
+from django.views.generic.simple import direct_to_template
 
 from posts.models import Post
 
@@ -20,6 +21,8 @@ urlpatterns = patterns('',
     url(r'^post/(?P<slug>[^/]+)/?$', post_detail, name='post_detail'),
     url(r'^$', post_list, name='post_list'),
     url(r'^post/(?P<slug>[^/]+)/comment/?$', Comment),
+    url(r'^about/?$', direct_to_template, {'template': 'about.html'}),
+    url(r'^contact/?$', direct_to_template, {'template': 'contact.html'}),
     # url(r'^voices/', include('voices.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
