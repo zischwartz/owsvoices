@@ -16,7 +16,7 @@ class Comment(models.Model):
 	text = models.TextField()
 	hands = models.IntegerField() # up is 1, middle is 0, -1 is down
 	comments = ListField(EmbeddedModelField('self'), editable=False)
-	child_number = models.IntegerField(default=0) # 0 is attached to post, 1 is to a comment, 2 is to a comment on a comment
+	child_number = models.IntegerField(default=0, blank=True, null=True) # 0 is attached to post, 1 is to a comment, 2 is to a comment on a comment
 
 	def __unicode__(self):
 		return self.author

@@ -84,6 +84,7 @@ body
 		background-image: none !important;
 		font-size: .9em;
 		height: 2.4em;
+		height: 3.3em;
 		box-shadow: none !important;
 		border-bottom: 1px solid #cdcdcd;
 	}
@@ -123,7 +124,9 @@ body
 <div class="topbar" style="position: relative !important;">
       <div class="fill">
         <div class="container">
-          <a class="brand" href="/">OWSvoices.org</a>
+          {# <a class="brand" href="/">OWSvoices.org</a> #}
+          <a class="brand" href="/"><img src="{{STATIC_URL}}logo2.png" style="margin-top: -8px;"></a>
+			
           <ul class="secondary-nav nav">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
