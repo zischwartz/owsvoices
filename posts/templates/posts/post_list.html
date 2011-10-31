@@ -2,14 +2,14 @@
 
 {%block content%}
 
-<a class="brand" href="/"><img src="{{STATIC_URL}}soz.jpg" style="margin-top: -8px;"></a>
+<a class="brand" href="/"><img src="{{STATIC_URL}}soz.jpg" style="margin: 0 auto; display: block;"></a>
 {% for post in post_list %}
 <div class="post {%if forloop.first%} hugepostNOT {% endif %}">
 
 	  <h2><a href="{% url post_detail post.slug %}">{{ post.title }}</a></h2>
 	  <!-- <p>{{post.text|truncatewords:20}}</p> -->
 	  <div class="row">
-		<img src='/media/{{post.photo}}' class='photo' >
+		{%if post.photo%}<img src='/media/{{post.photo}}' class='photo' >{%endif%}
 	  	<div class="span11 posttext">
 	  		{{post.text}}
 	  	</div>
