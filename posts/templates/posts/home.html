@@ -10,7 +10,7 @@
     {{ post.comments|length }} comments |
     tagged {{ post.tags|join:', ' }}
   </p>
-{{post.photo}}
+<img src='{{post.photo}}' class='photo' >
 {% endfor %}
 
 
