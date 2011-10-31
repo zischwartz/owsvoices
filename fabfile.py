@@ -158,8 +158,17 @@ user=root
 autostart=true
 autorestart=true
 
+[program:nginx]
+command= nginx
+user=root
+autostart=true
+autorestart=true
 
-
+[program:gunicorn_django]
+command=/home/ec2-user/conversation/bin/gunicorn_django
+user=root
+autostart=true
+autorestart=true
   """ 
   # % (code_dir)
 
