@@ -16,7 +16,7 @@ class Comment(models.Model):
 	text = models.TextField()
 	hands = models.IntegerField() # up is 1, middle is 0, -1 is down
 	comments = ListField(EmbeddedModelField('self'), editable=False)
-	# child_number = models.IntegerField(default=0, blank=True, null=True) # 0 is attached to post, 1 is to a comment, 2 is to a comment on a comment
+	child_number = models.IntegerField(default=0, blank=True, null=True) # 0 is attached to post, 1 is to a comment, 2 is to a comment on a comment
 
 	def __unicode__(self):
 		return self.author
@@ -36,12 +36,14 @@ class Comment(models.Model):
 			return 'success'
 
 class Post(models.Model):
-	title = models.CharField(max_length=250)
-	slug = AutoSlugField(populate_from='title', primary_key=True)
-	author = models.CharField(max_length=250)
-	occupation = models.CharField(max_length=250, blank=True)
-	age = models.IntegerField()
-	text = models.TextField()
+	# title = models.CharField(max_length=250)
+	created_on = models.DateTimeField(auto_now_add=True, null=True)
+	cheap = models.CharField(max_length=250, default='Board')
+	slug = AutoSlugField(populate_from='cheap', primary_key=True)
+	# author = models.CharField(max_length=250)
+	# occupation = models.CharField(max_length=250, blank=True)
+	# age = models.IntegerField()
+	text = models.TextField(blank=True)
 	
 	photo = models.FileField(upload_to='photos', blank=True)
 	created_on = models.DateTimeField(auto_now_add=True, null=True)
@@ -65,8 +67,8 @@ class Post(models.Model):
 
 		super(Post, self).save(*args, **kwargs)
 
-	def __unicode__(self):
-		return self.title
+	# def __unicode__(self):
+		# return self.created_on
 	
 	class Meta:
 		ordering = ['-created_on']

@@ -17,7 +17,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', Home),
-    # url(r'^post/(?P<slug>[a-z\d]+)/$', post_detail, name='post_detail'),
+    # url(r'^post/(?P<pk>[a-z\d]+)/$', post_detail, name='post_detail'),
     url(r'^post/(?P<slug>[^/]+)/?$', post_detail, name='post_detail'),
     url(r'^$', post_list, name='post_list'),
     url(r'^post/(?P<slug>[^/]+)/comment/?$', Comment),

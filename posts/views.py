@@ -14,7 +14,7 @@ import settings
 
 from forms import CommentForm
 from django.contrib import messages
-
+ 
 
 
 def Home (request): 

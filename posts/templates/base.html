@@ -8,7 +8,7 @@
 
 body
 {
-	background-color: #fafafa;
+/*	background-color: #fafafa;*/
 }
 	input
 	{
@@ -39,27 +39,7 @@ body
 	}
 
 
-	.hugepost
-	{
-		border: 1px solid #e8e8e8;
-		padding: 20px;
-		margin-left: -20px;
-		background-color: white;
-	}
 
-	.hugepost h2
-	{
-		font-size: 4.5em;
-		text-align: center;
-		padding-bottom: .5em;
-		line-height: 1em;
-	}
-
-	.hugepost p, .hugepost .posttext
-	{
-		font-size: 1.1em;
-		/*color: red;*/
-	}
 
 	.btn.gocomment
 	{
@@ -80,13 +60,13 @@ body
 
 	.fill
 	{
-		background-color: #e8e9ef !important;
+		background-color: white !important;
 		background-image: none !important;
 		font-size: .9em;
 		height: 2.4em;
 		height: 3.3em;
 		box-shadow: none !important;
-		border-bottom: 1px solid #cdcdcd;
+/*		border-bottom: 1px solid #cdcdcd;*/
 	}
 
 	.fill .brand
@@ -120,41 +100,53 @@ body
 	{
 		display:block;
 		width: 94%;
-		padding: 25px;
-		padding-top: 5px;
+/*		padding: 25px;*/
+/*		padding-top: 5px;*/
 	}
 
 </style>
+<script type="text/javascript">
 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26810156-1']);
+  _gaq.push(['_setDomainName', '.']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </head>
 
 <body>
-<div class="topbar" style="position: relative !important;">
-      <div class="fill">
-        <div class="container">
-          <a class="brand" href="/">StraightOuttaZuccotti.org</a>
-          <!-- <a class="brand" href="/"><img src="{{STATIC_URL}}logo2.png" style="margin-top: -8px;"></a> -->
-			
-          <ul class="secondary-nav nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
 
-{% if messages %}
-{% for message in messages %}
+
+
+
 <div class="container">
-<br><br>
-<div class="alert-message error span14 offset1">
-  <!-- <a class="close" href="#">×</a> -->
-  <p><strong>Oh Noes! </strong> {{message}}</p>
-</div> {%endfor%}
-</div>
-{% endif %}
 
+	{# <a class="span5" style="top: 0; left:0px; display: block; position: absolute; overflow:hidden;" href="/"> #}
+	<div class="span5" style="position:absolute; top: 10px;" href="/">
+			<a href="/"><img src="{{STATIC_URL}}soz.jpg" class="span5" style="margin-left: -40px"></a>
+			<a class="span1" href="#">Home</a> 
+			<a class="span1" href="#">About</a>
+			<a class="span1" href="#">Contact</a>
+		</div>
+	
+	</div>
+	{% if messages %}
+	{% for message in messages %}
+	<div class="container">
+	<br><br>
+	<div class="alert-message error span10 offset5">
+	  <!-- <a class="close" href="#">×</a> -->
+	  <p><strong>Oh Noes! </strong> {{message}}</p>
+	</div> {%endfor%}
+	</div>
+	{% endif %}
 <div class="container">
 {%block content%}
 	You shouldn't see this.

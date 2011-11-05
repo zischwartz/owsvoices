@@ -13,3 +13,4 @@ class CommentForm(ModelForm):
 		# 	'slug': HiddenInput,
 		# 	'number_of_cards': HiddenInput,
 		# 	}
+		
