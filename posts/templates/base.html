@@ -104,6 +104,12 @@ body
 /*		padding: 25px;*/
 /*		padding-top: 5px;*/
 	}
+	
+	.description
+	{
+		font-style: italic;
+		margin-left: -35px;
+	}
 
 </style>
 <script type="text/javascript">
@@ -140,13 +146,14 @@ $(document).ready(function() {
 
 
 <div class="container">
-
+	{# <div class="offset5 span4">A whiteboard and a website</div> #}
 	{# <a class="span5" style="top: 0; left:0px; display: block; position: absolute; overflow:hidden;" href="/"> #}
 	<div class="span5" style="position:absolute; top: 10px;" href="/">
 			<a href="/"><img src="{{STATIC_URL}}soz.jpg" class="span5" style="margin-left: -40px"></a>
 			<a class="span1" href="/">Home</a> 
 			<a class="span1" href="/about">About</a>
 			<a class="span1" href="/contact">Contact</a>
+			<div class="span5 description"><br>We placed a whiteboard at OWS with the prompt 'What do you think?'<br> These are the results.</div>
 		</div>
 	
 	</div>
